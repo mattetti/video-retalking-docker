@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  lipsync-service:
+    image: lipsync:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lipsync_container
+    environment:
+      - TZ=America/Los_Angeles
+    volumes:
+      - ./checkpoints:/video-retalking/checkpoints
+      - ./temp:/temp
+    ports:
+      - 7860:7860
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
